@@ -1,0 +1,5 @@
+__pycache__
+*tfstate*
+.terraform
+created_users/
+*lock.hcl
