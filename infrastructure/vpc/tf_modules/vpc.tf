@@ -33,18 +33,18 @@ resource "aws_db_subnet_group" "vpc_subnet_group" {
 }
 
 # Create the Security Group
-resource "aws_security_group" "vpc_security_group" {
+resource "aws_security_group" "security_group" {
   vpc_id      = aws_vpc.vpc.id
-  name        = "vpc_security_group"
+  name        = "security_group"
   description = "Data Engineering VPC Security Group"
 
   # allow ingress of port 22
-  ingress {
-    cidr_blocks = var.ingressCIDRblock
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-  }
+  # ingress {
+  #   cidr_blocks = var.ingressCIDRblock
+  #   from_port   = 22
+  #   to_port     = 22
+  #   protocol    = "tcp"
+  # }
 
   # allow egress of all ports
   egress {
@@ -52,6 +52,12 @@ resource "aws_security_group" "vpc_security_group" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port   = 0
+    to_port     = 5432
+    protocol    = "tcp"
+    cidr_blocks = var.ingressCIDRblock
   }
   tags = {
     Name        = "security_group"

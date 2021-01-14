@@ -13,6 +13,8 @@ data "aws_db_subnet_group" "vpc_subnet_group" {
   name = "data_engineering_subnet_group_eu_west_2"
 }
 
+
+
 output "database_endpoint" {
   value = module.pgdb.database_endpoint
 }
@@ -26,6 +28,7 @@ output "database_port" {
 output "database_name" {
   value = module.pgdb.database_name
 }
+
 
 module "pgdb" {
   source              = "./tf_modules"

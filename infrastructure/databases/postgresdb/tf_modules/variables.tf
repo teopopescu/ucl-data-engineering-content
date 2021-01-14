@@ -1,7 +1,3 @@
-# https://github.com/azavea/terraform-aws-postgresql-rds/blob/develop/main.tf
-# https://github.com/azavea/terraform-aws-postgresql-rds
-# https://github.com/azavea/terraform-aws-postgresql-rds/blob/develop/variables.tf
-# https://gruntwork.io/guides/networking/how-to-deploy-production-grade-vpc-aws/#subnets
 variable "project" {
   default     = "Data-Engineering"
   type        = string

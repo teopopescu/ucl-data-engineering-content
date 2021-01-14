@@ -1,3 +1,16 @@
+data "aws_security_group" "selected" {
+  filter {
+    name   = "group-name"
+    values = ["security_group"]
+  }
+}
+data "aws_db_subnet_group" "vpc_subnet_group" {
+  name = "data_engineering_subnet_group_eu_west_2"
+}
+
+
+
+
 resource "aws_db_instance" "pgdb" {
   allocated_storage               = var.allocated_storage
   engine                          = var.engine
@@ -23,6 +36,8 @@ resource "aws_db_instance" "pgdb" {
   deletion_protection             = var.deletion_protection
   enabled_cloudwatch_logs_exports = var.cloudwatch_logs_exports
   publicly_accessible             = var.publicly_accessible
+  vpc_security_group_ids          = [data.aws_security_group.selected.id]
+  db_subnet_group_name            = data.aws_db_subnet_group.vpc_subnet_group.id
 
   tags = merge(
     {

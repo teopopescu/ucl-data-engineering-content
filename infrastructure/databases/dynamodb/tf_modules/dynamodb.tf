@@ -1,37 +1,43 @@
-# resource "aws_db_instance" "pgdb" {
-#   allocated_storage               = var.allocated_storage
-#   engine                          = var.engine
-#   engine_version                  = var.engine_version
-#   identifier                      = var.database_identifier
-#   snapshot_identifier             = var.snapshot_identifier
-#   instance_class                  = var.instance_type
-#   storage_type                    = var.storage_type
-#   name                            = var.database_name
-#   password                        = var.database_password
-#   username                        = var.database_username
-#   backup_retention_period         = var.backup_retention_period
-#   backup_window                   = var.backup_window
-#   maintenance_window              = var.maintenance_window
-#   auto_minor_version_upgrade      = var.auto_minor_version_upgrade
-#   final_snapshot_identifier       = var.final_snapshot_identifier
-#   skip_final_snapshot             = var.skip_final_snapshot
-#   copy_tags_to_snapshot           = var.copy_tags_to_snapshot
-#   multi_az                        = var.multi_availability_zone
-#   port                            = var.database_port
-#   parameter_group_name            = var.parameter_group
-#   storage_encrypted               = var.storage_encrypted
-#   deletion_protection             = var.deletion_protection
-#   enabled_cloudwatch_logs_exports = var.cloudwatch_logs_exports
-#   publicly_accessible             = var.publicly_accessible  
+resource "aws_dynamodb_table" "basic-dynamodb-table" {
+  name           = "GameScores"
+  billing_mode   = "PROVISIONED"
+  read_capacity  = 20
+  write_capacity = 20
+  hash_key       = "UserId"
+  range_key      = "GameTitle"
 
-#   tags = merge(
-#     {
-#       Name        = "DatabaseServer",
-#       Project     = var.project,
-#       Environment = var.environment
-#     },
-#     var.tags
-#   )
-# }
+  attribute {
+    name = "UserId"
+    type = "S"
+  }
 
+  attribute {
+    name = "GameTitle"
+    type = "S"
+  }
 
+  attribute {
+    name = "TopScore"
+    type = "N"
+  }
+
+  ttl {
+    attribute_name = "TimeToExist"
+    enabled        = false
+  }
+
+  global_secondary_index {
+    name               = "GameTitleIndex"
+    hash_key           = "GameTitle"
+    range_key          = "TopScore"
+    write_capacity     = 10
+    read_capacity      = 10
+    projection_type    = "INCLUDE"
+    non_key_attributes = ["UserId"]
+  }
+
+  tags = {
+    Name        = "dynamodb-table-1"
+    Environment = "production"
+  }
+}
