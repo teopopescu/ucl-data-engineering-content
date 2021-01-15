@@ -1,5 +1,53 @@
 variable "users_to_be_created" {
-    type = list
-    default = ["student1", "student2", "student3"]
-    description = "All users to be created for the students group."
+  type = list(any)
+  default = [
+    "sultan.alawar.20@ucl.ac.uk",
+    "islam.ashia.20@ucl.ac.uk",
+    "daniela.avramioti.20@ucl.ac.uk",
+    "luke.botbol.20@ucl.ac.uk",
+    "paz.caniza.20@ucl.ac.uk",
+    "angel.chen.17@ucl.ac.uk",
+    "christopher.glaeser-yalen.20@ucl.ac.uk",
+    "avwerosuoghene.imarah.20@ucl.ac.uk",
+    "saajit.irfahn.20@ucl.ac.uk",
+    "r.jing.20@ucl.ac.uk",
+    "christopher.kindl.20@ucl.ac.uk",
+    "clemens.klasen.20@ucl.ac.uk",
+    "helen.lai.16@ucl.ac.uk",
+    "kyriakos.leonidou.20@ucl.ac.uk",
+    "zhicheng.li.20@ucl.ac.uk",
+    "jing.liao.20@ucl.ac.uk",
+    "siyu.lin.17@ucl.ac.uk",
+    "pim.linssen.20@ucl.ac.uk",
+    "zczl410@ucl.ac.uk",
+    "genshen.liu.20@ucl.ac.uk",
+    "lu.lu.20@ucl.ac.uk",
+    "thyrsos.makloklas.20@ucl.ac.uk",
+    "niklas.marx.20@ucl.ac.uk",
+    "chigozie.nlewedum.20@ucl.ac.uk",
+    "faisal.noor.20@ucl.ac.uk",
+    "bingyu.pang.20@ucl.ac.uk",
+    "meghana.patakota.20@ucl.ac.uk",
+    "frederick.reid.20@ucl.ac.uk",
+    "juan.arana.20@ucl.ac.uk",
+    "jake.rutherford.20@ucl.ac.uk",
+    "kinji.steimetz.20@ucl.ac.uk",
+    "anna.stylianou.20@ucl.ac.uk",
+    "vanessa.sukanta.20@ucl.ac.uk",
+    "carina.tiedemann.20@ucl.ac.uk",
+    "celine.trampe.20@ucl.ac.uk",
+    "antoine.verdier.20@ucl.ac.uk",
+    "mengjiao.wang.20@ucl.ac.uk",
+    "shiyan.wang.17@ucl.ac.uk",
+    "peng.wang@ucl.ac.uk",
+    "xiaoxuan.wu.20@ucl.ac.uk",
+    "yerong.xu.20@ucl.ac.uk",
+    "quanxin.yan.20@ucl.ac.uk",
+    "jingya.yang.20@ucl.ac.uk",
+    "chang.yin.20@ucl.ac.uk",
+    "kelly.kok.20@ucl.ac.uk",
+    "junhan.zhang.20@ucl.ac.uk",
+    "yang.zheng.20@ucl.ac.uk"
+  ]
+  description = "All users to be created for the students group."
 }

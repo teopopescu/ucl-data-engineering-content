@@ -47,15 +47,18 @@ class PGWrapper:
     def rollback(self):
         self.cnx.rollback()
 
+
 config = {
-    "database": "se_pgdb",
+    "database": "de_pgdb",
     "user": "postgres",
     "password": "qwerty123",
-    "host": "sepgdb.c50u4bslwwg0.eu-west-2.rds.amazonaws.com",
+    "host": "depgdb.c50u4bslwwg0.eu-west-2.rds.amazonaws.com",
     "port": 5432,
 }
 
-# db_con = PGWrapper(config)
-# db_con.connect()
-# results = db_con.query_as_list_of_dicts("SELECT * FROM information_schema.schemata")
-# print(results)
+db_con = PGWrapper(config)
+db_con.connect()
+results = db_con.query_as_list_of_dicts("SELECT * FROM information_schema.schemata")
+print(results)
+
+    
