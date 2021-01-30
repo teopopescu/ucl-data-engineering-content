@@ -1,0 +1,100 @@
+Hi Niall,
+
+So, I have this script to create the users and databases for them and also the password (my favourite super extra secure qwerty123).
+
+"""
+USERS="$(ls ../../users/created_users/)"
+
+DATABASE_PORT=$(terraform output -raw database_port)
+DATABASE_ENDPOINT=$(terraform output -raw database_endpoint | sed s/:${DATABASE_PORT}//)
+DATABASE_PASSWORD=$(terraform output -raw database_password)
+DATABASE_NAME=$(terraform output -raw database_name)
+export PGPASSWORD=${DATABASE_PASSWORD}
+
+for USER in ${USERS}; do
+    DB_USER=$(echo ${USER} | sed 's/\.//g' | sed 's/\([a-z0-9]\)@uclacuk/\1/' | sed 's/-//g')
+    psql -h "${DATABASE_ENDPOINT}" -p "${DATABASE_PORT}" -U postgres -d "${DATABASE_NAME}" <<EOF 
+        drop database ${DB_USER};
+        create database ${DB_USER};
+        create user ${DB_USER};
+        alter user ${DB_USER} with password 'qwerty123';
+        grant all privileges on database ${DB_USER} to ${DB_USER};
+EOF
+done
+"""
+
+I checked and it allows them to recreate and query the schema, they can connect to other databases but they get permission denied when they run things in there. Let me know if you
+spot something else in there that needs to be changed. I think it should do, but I might have missed something.
+
+1. These are the emails that I have for students and what I did is I got everything before @ucl.ac.uk and replaced hyphens and dots with nothing.
+[
+    "sultan.alawar.20@ucl.ac.uk",
+    "islam.ashia.20@ucl.ac.uk",
+    "daniela.avramioti.20@ucl.ac.uk",
+    "luke.botbol.20@ucl.ac.uk",
+    "paz.caniza.20@ucl.ac.uk",
+    "angel.chen.17@ucl.ac.uk",
+    "christopher.glaeser-yalen.20@ucl.ac.uk",
+    "avwerosuoghene.imarah.20@ucl.ac.uk",
+    "saajit.irfahn.20@ucl.ac.uk",
+    "r.jing.20@ucl.ac.uk",
+    "christopher.kindl.20@ucl.ac.uk",
+    "clemens.klasen.20@ucl.ac.uk",
+    "helen.lai.16@ucl.ac.uk",
+    "kyriakos.leonidou.20@ucl.ac.uk",
+    "zhicheng.li.20@ucl.ac.uk",
+    "jing.liao.20@ucl.ac.uk",
+    "siyu.lin.17@ucl.ac.uk",
+    "pim.linssen.20@ucl.ac.uk",
+    "zczl410@ucl.ac.uk",
+    "genshen.liu.20@ucl.ac.uk",
+    "lu.lu.20@ucl.ac.uk",
+    "thyrsos.makloklas.20@ucl.ac.uk",
+    "niklas.marx.20@ucl.ac.uk",
+    "chigozie.nlewedum.20@ucl.ac.uk",
+    "faisal.noor.20@ucl.ac.uk",
+    "bingyu.pang.20@ucl.ac.uk",
+    "meghana.patakota.20@ucl.ac.uk",
+    "frederick.reid.20@ucl.ac.uk",
+    "juan.arana.20@ucl.ac.uk",
+    "jake.rutherford.20@ucl.ac.uk",
+    "kinji.steimetz.20@ucl.ac.uk",
+    "anna.stylianou.20@ucl.ac.uk",
+    "vanessa.sukanta.20@ucl.ac.uk",
+    "carina.tiedemann.20@ucl.ac.uk",
+    "celine.trampe.20@ucl.ac.uk",
+    "antoine.verdier.20@ucl.ac.uk",
+    "mengjiao.wang.20@ucl.ac.uk",
+    "shiyan.wang.17@ucl.ac.uk",
+    "peng.wang@ucl.ac.uk",
+    "xiaoxuan.wu.20@ucl.ac.uk",
+    "yerong.xu.20@ucl.ac.uk",
+    "quanxin.yan.20@ucl.ac.uk",
+    "jingya.yang.20@ucl.ac.uk",
+    "chang.yin.20@ucl.ac.uk",
+    "kelly.kok.20@ucl.ac.uk",
+    "junhan.zhang.20@ucl.ac.uk",
+    "yang.zheng.20@ucl.ac.uk"
+]
+
+So "christopher.glaeser-yalen.20@ucl.ac.uk" will be christopherglaeseryalen20 for the user and database, password mentioned above.
+
+
+2. Instructions for students:
+"""
+Hi,
+
+At the moment you are using a general purpose database inside progres called de_pgdb, this causes some inconveniences because all of you will use it and might interact
+with the queries that other people are running on it. Hence we decided to create your own database that you can use and try it out without worrying about others.
+
+Your password will be qwerty123. Your database and username will be as follows:
+
+    Your email, truncate it and get everything before @ucl.ac.uk. Remove all the dots between ur names and hyphens if there are any. Hence, if your 
+    uni email is somename.someothername-someotherothername20@ucl.ac.uk, your database and user will be somenamesomeothernamesomeotherothername20.
+Hence, you can connect to it as follows:
+    psql -h depgdb.c50u4bslwwg0.eu-west-2.rds.amazonaws.com -p 5432 -U somenamesomeothernamesomeotherothername20 -d somenamesomeothernamesomeotherothername20
+
+Kind regards
+Data Engineering Team
+
+"""

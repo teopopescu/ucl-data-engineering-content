@@ -1,5 +1,5 @@
 data "aws_iam_group" "students" {
-  group_name = "students"
+  group_name = "students_group_ucl_data_engineering_week4"
 }
 
 resource "aws_iam_user" "studentTest" {
