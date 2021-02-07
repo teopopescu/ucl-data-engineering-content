@@ -3,3 +3,4 @@ __pycache__
 .terraform
 created_users/
 *lock.hcl
+.DS_Store
